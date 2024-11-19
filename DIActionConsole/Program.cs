@@ -12,13 +12,18 @@ namespace DIActionConsole
                 .AddSingleton<IRenovationTask, PaintWallsTask>()
                 .AddSingleton<IRenovationTask, BuildFurnitureTask>()
                 .AddSingleton<IRenovationTask, InstallElectricalWiringTask>()
+                .AddSingleton<Startup>()
                 .BuildServiceProvider();
 
+            // 透過 DI 執行 Startup
+            var startup = serviceProvider.GetRequiredService<Startup>();
+            startup.Run();
+
             // 使用注入的服務
-            foreach (var service in serviceProvider.GetServices<IRenovationTask>())
-            {
-                service.Execute(service.Description);
-            }
+            //foreach (var service in serviceProvider.GetServices<IRenovationTask>())
+            //{
+            //    service.Execute(service.Description);
+            //}
 
             Console.ReadLine();
         }
